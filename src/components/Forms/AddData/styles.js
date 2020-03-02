@@ -6,15 +6,13 @@ export const FormDiv = styled.form`
 `;
 
 export const PhotoFrame = styled.div`
-  width: 100%;
-  height: 300px;
   background: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  border: 1px dashed #666;
+  border: none;
   margin: 50px auto;
   img {
     height: 64px;
@@ -23,6 +21,34 @@ export const PhotoFrame = styled.div`
   :hover {
     cursor: pointer;
   }
+
+  label#thumbnail {
+    border: 1px dashed #ddd;
+    background-size: cover;
+    cursor: pointer;
+    width: 500px;
+    height: 300px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    label {
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+  }
+
+  label#thumbnail input {
+    display: none;
+  }
+
+  label#thumbnail.has-thumbnail {
+    border: 0;
+  }
+
   @media (max-width: 768px) {
     border: 1px solid #eee;
     height: 200px;

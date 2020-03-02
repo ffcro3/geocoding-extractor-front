@@ -23,14 +23,14 @@ export default function Elections() {
 
   useEffect(() => {
     async function checkUser() {
-      const token = await localStorage.getItem('@userIdentification');
+      const token = await localStorage.getItem('@userIdentificationGeoCode');
       const response = await api
         .post('/session/verify', {
           token
         })
         .catch(function(error) {
           if (error.response.data.message === 'jwt expired') {
-            localStorage.removeItem('@userIdentification');
+            localStorage.removeItem('@userIdentificationGeoCode');
           }
           if (error.response.data.message === 'jwt must be provided') {
             history.push('/');

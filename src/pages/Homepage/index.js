@@ -51,9 +51,9 @@ export default function HomePage() {
     if (response) {
       const token = response.data.token;
       console.log(response.data);
-      localStorage.setItem('@userIdentification', token);
-      localStorage.setItem('@currentCIPAUser', response.data.user.name);
-      localStorage.setItem('@currentCIPAMail', response.data.user.email);
+      localStorage.setItem('@userIdentificationGeoCode', token);
+      localStorage.setItem('@currentGeoUser', response.data.user.name);
+      localStorage.setItem('@currentGeoMail', response.data.user.email);
       const homepath = `/home`;
       history.push(homepath);
     }

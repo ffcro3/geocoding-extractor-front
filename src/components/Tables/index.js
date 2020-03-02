@@ -24,7 +24,7 @@ export default function Tables() {
   }, [page]);
 
   async function loadLocations() {
-    const token = await localStorage.getItem('@userIdentification');
+    const token = await localStorage.getItem('@userIdentificationGeoCode');
     const response = await api
       .get(`/address?page=${page}`, {
         headers: {
@@ -84,7 +84,7 @@ export default function Tables() {
         </tbody>
       </Table>
       <Pagination>
-        {page <= 1 ? (
+        {page <= 0 ? (
           ''
         ) : (
           <PaginationButton onClick={() => PreviousPageClick()}>
