@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {
   Page,
@@ -36,15 +38,15 @@ export default function HomePage() {
           error.response.data.error ===
           'Email and password are requireds. Please check these fields and try again'
         ) {
-          alert('Campos com erros. Veirifique e tente novamente');
+          errorNotify('Campos com erros. Veirifique e tente novamente');
         }
 
         if (error.response.data.error === 'User does not exist') {
-          alert('Usuário não encontrado');
+          errorNotify('Usuário não encontrado');
         }
 
         if (error.response.data.error === 'Password invalid') {
-          alert('Senha inválida');
+          errorNotify('Senha inválida');
         }
       });
 
@@ -57,6 +59,18 @@ export default function HomePage() {
       const homepath = `/home`;
       history.push(homepath);
     }
+  }
+
+  function errorNotify(data) {
+    toast.error(`Ops!! ${data}`, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  function successNotify(data) {
+    toast.success(data, {
+      position: toast.POSITION.TOP_RIGHT
+    });
   }
 
   return (
