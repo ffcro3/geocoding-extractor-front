@@ -1,27 +1,60 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
 
 import api from '../../../services/api';
 
-import {
-  FormGroup,
-  SelectInput,
-  TextInput,
-  Label,
-  SaveButton,
-  SaveFormDiv,
-  LabelSmall,
-  DateInput
-} from '../../global';
-import { FormDiv, PhotoFrame, PhotoButton } from './styles';
+import { FormGroup, SaveButton, SaveFormDiv } from '../../global';
+import { FormDiv, PhotoFrame } from './styles';
 
 export default function AddElection() {
   const [uploaded, setUploaded] = useState(['Selecione um Arquivo']);
+  const [file, setFile] = useState(['Selecione um Arquivo']);
+  const history = useHistory();
 
   useEffect(() => {}, [uploaded]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const token = localStorage.getItem('@userIdentification');
+    const data = await new FormData();
+    await data.append('file', file);
+
+    const token = localStorage.getItem('@userIdentificationGeoCode');
+    const response = await api
+      .post('/addressStore', data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .catch(function(err) {
+        errorNotify(err);
+      });
+
+    if (response) {
+      successNotify(
+        `Inserido ${response.data.success} endereços no banco. \n Clique em Sincronizar para continuar`
+      );
+      history.push('/home');
+    }
+  }
+
+  function setImage(file) {
+    setUploaded('1 Arquvo selecionado');
+    setFile(file);
+    console.log(file);
+  }
+
+  function errorNotify(data) {
+    toast.error(`Ops!! ${data}`, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  function successNotify(data) {
+    toast.success(data, {
+      position: toast.POSITION.TOP_RIGHT
+    });
   }
 
   return (
@@ -32,7 +65,7 @@ export default function AddElection() {
             <label id="thumbnail">
               <input
                 type="file"
-                onChange={event => setUploaded('1 Arquivo selecionado')}
+                onChange={e => setImage(e.target.files[0])}
                 accept="application/vnd.ms-excel"
                 style={{
                   width: '100%',
@@ -50,7 +83,7 @@ export default function AddElection() {
           </PhotoFrame>
         </FormGroup>
         <SaveFormDiv>
-          <SaveButton type="submit" onClick={() => handleSubmit()}>
+          <SaveButton type="submit" onClick={e => handleSubmit(e)}>
             Salvar
           </SaveButton>
         </SaveFormDiv>

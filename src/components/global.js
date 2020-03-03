@@ -83,6 +83,9 @@ export const SaveButton = styled.button`
   border: none;
   border-radius: 4px;
   margin-bottom: 30px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const SaveFormDiv = styled.div`
