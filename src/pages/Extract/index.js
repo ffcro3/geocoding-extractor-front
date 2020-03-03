@@ -1,5 +1,8 @@
 import React, { Component, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import download from 'downloadjs';
 import {
   Container,
   Button,
@@ -13,6 +16,7 @@ import { ContainerStyle, ButtonExport } from './styles';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import { ContainerPage, ContainerDiv } from '../../components/Container';
+import delay from 'delay';
 
 import api from '../../services/api';
 
@@ -49,6 +53,39 @@ export default function Elections() {
     checkUser();
   }, []);
 
+  async function handleDownload() {
+    const token = localStorage.getItem('@userIdentificationGeoCode');
+    const response = await api
+      .get('/download/convert', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .catch(function(err) {
+        errorNotify(err);
+      });
+
+    if (response) {
+      successNotify(`conversão concluída, inciando o download`);
+      const token = localStorage.getItem('@userIdentificationGeoCode');
+      const res = await fetch('http://localhost:9090/download');
+      const blob = await res.blob();
+      download(blob, 'Address.xlsx');
+    }
+  }
+
+  function errorNotify(data) {
+    toast.error(`Ops!! ${data}`, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  function successNotify(data) {
+    toast.success(data, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
   function navigateTo(page) {
     history.push(`/${page}`);
   }
@@ -59,7 +96,9 @@ export default function Elections() {
       <ContainerDiv>
         <ContainerPage>
           <ContainerStyle>
-            <ButtonExport>Extrair Dados para Excel</ButtonExport>
+            <ButtonExport onClick={() => handleDownload()}>
+              Extrair Dados para Excel
+            </ButtonExport>
           </ContainerStyle>
         </ContainerPage>
       </ContainerDiv>
