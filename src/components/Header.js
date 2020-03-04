@@ -27,6 +27,9 @@ export default function Header() {
   if (arrayURL.includes('view')) {
     PageTitle = 'Visualizar Dados';
   }
+  if (arrayURL.includes('users')) {
+    PageTitle = 'Usuários';
+  }
 
   return (
     <HeaderContainer>

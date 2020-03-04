@@ -81,3 +81,18 @@ export const PhotoButton = styled.button`
     width: 120px;
   }
 `;
+
+export const DivRefresh = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+`;
+
+export const DivText = styled.span`
+  font-size: 36px;
+  color: #3f8cf4;
+`;

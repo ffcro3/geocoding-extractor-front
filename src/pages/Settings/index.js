@@ -17,6 +17,7 @@ import {
 
 import { FaUserFriends, FaLocationArrow, FaRegFileExcel } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
+import { GiExitDoor } from 'react-icons/gi';
 
 import api from '../../services/api';
 
@@ -53,29 +54,27 @@ export default function Elections() {
     checkUser();
   }, []);
 
+  function navigateTo(page) {
+    history.push(`/${page}`);
+  }
+
+  async function loggedOut() {
+    await localStorage.removeItem('@userIdentificationGeoCode');
+    history.push('/');
+  }
+
   return (
     <>
       <Header />
       <ContainerDiv>
         <ContainerPage>
           <ContainerTitle>Configurações da Aplicação</ContainerTitle>
-          <SettingsDiv>
-            <SubContainer>
-              <FaRegFileExcel size={40} />
-            </SubContainer>
-            <SubContainer>
-              <SettingsTitle>Relatórios</SettingsTitle>
-              <SettingsSubTitle>
-                Exportar relatórios da aplicação
-              </SettingsSubTitle>
-            </SubContainer>
-          </SettingsDiv>
 
           <SettingsDiv>
             <SubContainer>
               <FaUserFriends size={40} />
             </SubContainer>
-            <SubContainer>
+            <SubContainer onClick={() => navigateTo('users')}>
               <SettingsTitle>Usuários</SettingsTitle>
               <SettingsSubTitle>
                 Adicionar, remover, alterar usuários da aplicação
@@ -85,26 +84,11 @@ export default function Elections() {
 
           <SettingsDiv>
             <SubContainer>
-              <FaLocationArrow size={40} />
+              <GiExitDoor size={40} />
             </SubContainer>
-            <SubContainer>
-              <SettingsTitle>Sites</SettingsTitle>
-              <SettingsSubTitle>
-                Adicionar, remover, alterar sites da aplicação
-              </SettingsSubTitle>
-            </SubContainer>
-          </SettingsDiv>
-
-          <SettingsDiv>
-            <SubContainer>
-              <FiMail size={40} />
-            </SubContainer>
-            <SubContainer>
-              <SettingsTitle>SMTP</SettingsTitle>
-              <SettingsSubTitle>
-                Adicionar, remover, alterar dados de envio de e-mail da
-                aplicação
-              </SettingsSubTitle>
+            <SubContainer onClick={() => loggedOut()}>
+              <SettingsTitle>Sair do Sistema</SettingsTitle>
+              <SettingsSubTitle>Finalizar sessão no sistema.</SettingsSubTitle>
             </SubContainer>
           </SettingsDiv>
         </ContainerPage>

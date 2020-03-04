@@ -7,6 +7,7 @@ import Import from './pages/Import';
 import Extract from './pages/Extract';
 import View from './pages/View';
 import Settings from './pages/Settings';
+import Users from './pages/Users';
 
 export default function Routes() {
   return (
@@ -18,6 +19,7 @@ export default function Routes() {
         <Route path="/view" exact component={View} />
         <Route path="/settings" exact component={Settings} />
         <Route path="/import-new" exact component={Import} />
+        <Route path="/users" exact component={Users} />
       </Switch>
     </BrowserRouter>
   );
