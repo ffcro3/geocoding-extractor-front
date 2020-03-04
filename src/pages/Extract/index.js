@@ -68,7 +68,9 @@ export default function Elections() {
     if (response) {
       successNotify(`conversão concluída, inciando o download`);
       const token = localStorage.getItem('@userIdentificationGeoCode');
-      const res = await fetch('http://localhost:9090/download');
+      const res = await fetch(
+        'http://api.geolocation.girojundiai.com.br/download'
+      );
       const blob = await res.blob();
       download(blob, 'Address.xlsx');
     }
