@@ -2,7 +2,7 @@ import axios from 'axios';
 import 'dotenv/config';
 
 const api = axios.create({
-  baseURL: 'http://localhost:9090',
+  baseURL: 'https://api.geolocation.girojundiai.com.br',
   headers: {
     Accept: 'application/json'
   }
