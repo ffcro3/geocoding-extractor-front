@@ -83,7 +83,7 @@ export default function HomePage() {
             <SubTitle>Google Maps Javascript API to Geocoding</SubTitle>
             <TextInput
               placeholder="Digite aqui o seu e-mail"
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value.trim().toLowerCase())}
             />
             <TextInput
               placeholder="Digite aqui o sua senha"
